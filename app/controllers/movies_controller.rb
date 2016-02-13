@@ -12,7 +12,8 @@ class MoviesController < ApplicationController
 
   def index
     @movies = Movie.all
-    puts @movies
+    # %td= link_to "More about #{movie.title}", movie_path(movie)
+    # a.hilite
   end
 
   def new
