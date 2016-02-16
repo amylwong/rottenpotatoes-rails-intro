@@ -27,36 +27,20 @@ class MoviesController < ApplicationController
       @movies = @movies.order(sort)
     end
     
-    # puts "session:"
-    # puts session[:ratings]
-    # puts "param:"
-    # puts params[:ratings]
-    if session[:ratings] == params[:ratings] 
-      # redirect_to movies_path(:sort => params[:sort], :ratings => params[:ratings])
-      # puts "------"
-      # puts session[:ratings]
-      # puts params
-      return
-    else
-      puts "WUT"
+    unless session[:ratings] == params[:ratings] 
       session[:ratings] = @selected_ratings
-      # puts '++++++'
-      # puts session[:ratings]
-      path = movies_path(:ratings => @selected_ratings)
+      path = movies_path(:sort => params[:sort], :ratings => @selected_ratings)
       redirect_to path
       return
     end
     
-    if session[:sort] == params[:sort] 
-      # redirect_to movies_path(:sort => params[:sort], :ratings => params[:ratings])
-      return
-    else
+    unless session[:sort] == params[:sort] 
       session[:sort] = params[:sort]
-      path = movies_path(:sort => params[:sort])
+      path = movies_path(:sort => params[:sort], :ratings => @selected_ratings)
       redirect_to path
       return
     end
-    # flash.keep(:notice)
+
   end
 
   def new
