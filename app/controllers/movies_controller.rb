@@ -13,12 +13,15 @@ class MoviesController < ApplicationController
   def index
     @movies = Movie.all
     sort = params[:sort]
-    ratings = params[:ratings].keys
-    # puts("sighhhh")
-    # puts(ratings)
-    # puts(@movies)
+    unless params[:ratings].nil?
+      ratings = params[:ratings].keys
+      @movies = @movies.where("rating IN (?)", ratings)
+    end
+    puts("sighhhh")
+    puts(ratings)
+    puts(@movies)
     # puts(@movies.where("rating IN (?)", ratings))
-    @movies = @movies.where("rating IN (?)", ratings)
+
     @all_ratings = Movie.rating
     unless sort.nil?
       @movies = Movie.order(sort)
