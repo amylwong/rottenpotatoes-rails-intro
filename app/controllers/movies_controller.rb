@@ -15,15 +15,48 @@ class MoviesController < ApplicationController
     @selected_ratings = Movie.rating
     sort = params[:sort]
     unless params[:ratings].nil?
-      @selected_ratings = params[:ratings].keys
-      ratings = params[:ratings].keys
-      @movies = @movies.where("rating IN (?)", ratings)
+      @selected_ratings = params[:ratings]
+      unless @selected_ratings.class == Array
+        @selected_ratings = @selected_ratings.keys
+      end
+      @movies = @movies.where(rating: @selected_ratings)
     end
 
     @all_ratings = Movie.rating
     unless sort.nil?
       @movies = @movies.order(sort)
     end
+    
+    # puts "session:"
+    # puts session[:ratings]
+    # puts "param:"
+    # puts params[:ratings]
+    if session[:ratings] == params[:ratings] 
+      # redirect_to movies_path(:sort => params[:sort], :ratings => params[:ratings])
+      # puts "------"
+      # puts session[:ratings]
+      # puts params
+      return
+    else
+      puts "WUT"
+      session[:ratings] = @selected_ratings
+      # puts '++++++'
+      # puts session[:ratings]
+      path = movies_path(:ratings => @selected_ratings)
+      redirect_to path
+      return
+    end
+    
+    if session[:sort] == params[:sort] 
+      # redirect_to movies_path(:sort => params[:sort], :ratings => params[:ratings])
+      return
+    else
+      session[:sort] = params[:sort]
+      path = movies_path(:sort => params[:sort])
+      redirect_to path
+      return
+    end
+    # flash.keep(:notice)
   end
 
   def new
