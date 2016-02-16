@@ -19,13 +19,10 @@ class MoviesController < ApplicationController
       ratings = params[:ratings].keys
       @movies = @movies.where("rating IN (?)", ratings)
     end
-    puts("sighhhh")
-    puts(ratings)
-    # puts(@movies.where("rating IN (?)", ratings))
 
     @all_ratings = Movie.rating
     unless sort.nil?
-      @movies = Movie.order(sort)
+      @movies = @movies.order(sort)
     end
   end
 
