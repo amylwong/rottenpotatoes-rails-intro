@@ -12,14 +12,15 @@ class MoviesController < ApplicationController
 
   def index
     @movies = Movie.all
+    @selected_ratings = Movie.rating
     sort = params[:sort]
     unless params[:ratings].nil?
+      @selected_ratings = params[:ratings].keys
       ratings = params[:ratings].keys
       @movies = @movies.where("rating IN (?)", ratings)
     end
     puts("sighhhh")
     puts(ratings)
-    puts(@movies)
     # puts(@movies.where("rating IN (?)", ratings))
 
     @all_ratings = Movie.rating
