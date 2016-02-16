@@ -18,7 +18,7 @@ class MoviesController < ApplicationController
     # puts(ratings)
     # puts(@movies)
     # puts(@movies.where("rating IN (?)", ratings))
-    # @movies = @movies.where("rating IN (?)", ratings)
+    @movies = @movies.where("rating IN (?)", ratings)
     @all_ratings = Movie.rating
     unless sort.nil?
       @movies = Movie.order(sort)
