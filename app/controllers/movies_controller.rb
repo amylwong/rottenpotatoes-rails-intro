@@ -12,13 +12,11 @@ class MoviesController < ApplicationController
 
   def index
     @movies = Movie.all
-    puts("hi")
     sort = params[:sort]
-    puts(sort)
-    puts(@movies)
     unless sort.nil?
       @movies = Movie.order(sort)
     end
+    @all_ratings = Movie.rating
   end
 
   def new
