@@ -12,8 +12,13 @@ class MoviesController < ApplicationController
 
   def index
     @movies = Movie.all
-    # %td= link_to "More about #{movie.title}", movie_path(movie)
-    # a.hilite
+    puts("hi")
+    sort = params[:sort]
+    puts(sort)
+    puts(@movies)
+    unless sort.nil?
+      @movies = Movie.order(sort)
+    end
   end
 
   def new
